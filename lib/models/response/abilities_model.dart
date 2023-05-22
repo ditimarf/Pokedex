@@ -1,7 +1,7 @@
-import 'ability_model.dart';
+import 'package:pokedex/models/response/response_model.dart';
 
 class AbilitiesModel {
-  Ability? ability;
+  ResponseModel? ability;
   bool? isHidden;
   int? slot;
 
@@ -9,7 +9,7 @@ class AbilitiesModel {
 
   AbilitiesModel.fromJson(Map<String, dynamic> json) {
     ability =
-    json['ability'] != null ? new Ability.fromJson(json['ability']) : null;
+    json['ability'] != null ? new ResponseModel.fromJson(json['ability']) : null;
     isHidden = json['is_hidden'];
     slot = json['slot'];
   }

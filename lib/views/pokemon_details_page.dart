@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +8,7 @@ import 'package:pokedex/components/linear_progress_component.dart';
 import 'package:pokedex/configs.dart';
 import 'package:pokedex/models/response/pokemon_model.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:pokedex/models/response/pokemon_species_model.dart';
 import 'package:pokedex/services/pokemon_service.dart';
 
 import '../models/response/pokemon_details_model.dart';
@@ -13,34 +16,52 @@ import '../utils.dart';
 
 class PokemonDetailsPage extends StatefulWidget {
   PokemonModel pokemon;
+  int qtyMaxPokemons;
 
-  PokemonDetailsPage(this.pokemon, {Key? key}) : super(key: key);
+  PokemonDetailsPage(this.pokemon, this.qtyMaxPokemons, {Key? key})
+      : super(key: key);
 
   @override
-  State<PokemonDetailsPage> createState() => _PokemonDetailsPageState(pokemon);
+  State<PokemonDetailsPage> createState() =>
+      _PokemonDetailsPageState(pokemon, qtyMaxPokemons);
 }
 
 class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
+  int qtyMaxPokemons;
   PokemonModel pokemon;
   PokemonDetailsModel? details;
+  PokemonSpeciesModel? species;
   Color backgroundColor = Configs.primaryDefault;
 
-  _PokemonDetailsPageState(this.pokemon);
+  _PokemonDetailsPageState(this.pokemon, this.qtyMaxPokemons);
 
   @override
   void initState() {
     super.initState();
-    _requestDetails();
+    _loadPokemon(pokemon.id!);
   }
 
-  _requestDetails() async {
-    var details = await PokemonService.getPokemonDetails(pokemon.id!);
+  _loadPokemon(String id) async {
+    var species = await PokemonService.getPokemonSpecies(id);
+    var details = await PokemonService.getPokemonDetails(id);
+
     var backgroundColor = Utils.getTypeColor(details?.types?.first?.type?.name);
 
     setState(() {
       this.details = details;
+      this.species = species;
       this.backgroundColor = backgroundColor;
     });
+  }
+
+  loadPrevious() {
+    var previousPokemonId = details!.id! - 1;
+    _loadPokemon(previousPokemonId.toString());
+  }
+
+  loadNext() {
+    var previousPokemonId = details!.id! + 1;
+    _loadPokemon(previousPokemonId.toString());
   }
 
   @override
@@ -65,150 +86,189 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
-              //appbar
-              Row(
-                children: [
-                  IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.of(context).pop(true)),
-                  Text(
-                    Utils.firstWordUpperCase(details!.name),
-                    style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: Text(
-                        details?.idText() ?? "",
-                        textAlign: TextAlign.end,
-                        style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              //Pokeball Icon
-              Container(
-                alignment: Alignment.topRight,
-                child: Image.asset(
-                  'assets/images/pokeball.png',
-                  scale: 2,
-                  color: Colors.white.withOpacity(0.15),
-                ),
-              ),
-
-              //Stats Card
-              Container(
-                margin: EdgeInsets.fromLTRB(8, paddingTop + 228, 8, 8),
-                padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (var type in details!.types!)
-                          Container(
-                            margin: const EdgeInsets.all(8),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 8),
-                            decoration: BoxDecoration(
-                                color: Utils.getTypeColor(type.type!.name!),
-                                borderRadius: BorderRadius.circular(24)),
-                            child: Text(
-                              Utils.firstWordUpperCase(type.type!.name!),
-                              style: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: Text('About',
-                          style: GoogleFonts.poppins(
-                              color: backgroundColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700)),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        InfoCardCharComponent.defaultComponent(
-                            'assets/images/weight.png',
-                            '${(details!.weight! / 10)!}kg',
-                            'Weight'),
-                        const SizedBox(
-                          height: 50,
-                          child: VerticalDivider(
-                            color: Configs.grayMinimumDefault,
-                            thickness: 2,
-                          ),
-                        ),
-                        InfoCardCharComponent.defaultComponent(
-                            'assets/images/height.png',
-                            '${(details!.height! / 10)!}m',
-                            'Height'),
-                        const SizedBox(
-                          height: 50,
-                          child: VerticalDivider(
-                            color: Configs.grayMinimumDefault,
-                            thickness: 2,
-                          ),
-                        ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              for (var ability in details!.abilities!)
-                                Text(
-                                  Utils.firstWordUpperCase(
-                                      ability.ability!.name),
-                                  textAlign: TextAlign.start,
-                                  style: GoogleFonts.poppins(fontSize: 12),
-                                )
-                            ]),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24, bottom: 16),
-                      child: Text('Base stats',
-                          style: GoogleFonts.poppins(
-                              color: backgroundColor,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700)),
-                    ),
-                    for (var stat in details!.stats!)
-                      LinearProgressComponent.defaultComponent(
-                          stat.stat!.name!, stat.baseStat!, backgroundColor),
-                  ],
-                ),
-              ),
-
-              //Pokemon Image
-              Padding(
-                padding: EdgeInsets.only(top: paddingTop + 64),
-                child: Image.network(
-                  Utils.urlOfficialArtwork(details!.id!.toString()),
-                  height: 228,
-                ),
-              ),
+              createAppBar(),
+              createBackgroundImage(),
+              createInfosCard(paddingTop),
+              createPokemonImage(),
             ],
           ),
         ),
       );
     }
+  }
+
+  Widget createAppBar() {
+    return Row(
+      children: [
+        IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(true)),
+        Text(
+          Utils.firstWordUpperCase(details!.name),
+          style: GoogleFonts.poppins(
+              color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Text(
+              Utils.formatIdText(details?.id?.toString()),
+              textAlign: TextAlign.end,
+              style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget createBackgroundImage() {
+    return Container(
+      alignment: Alignment.topRight,
+      child: Image.asset(
+        'assets/images/pokeball.png',
+        scale: 2,
+        color: Colors.white.withOpacity(0.15),
+      ),
+    );
+  }
+
+  Widget createInfosCard(double paddingTop) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Visibility(
+                    visible: details!.id != 1,
+                    child: IconButton(
+                        icon:
+                            const Icon(Icons.chevron_left, color: Colors.white),
+                        onPressed: () => loadPrevious())),
+                Visibility(
+                    visible: details!.id! < qtyMaxPokemons,
+                    child: IconButton(
+                        icon: const Icon(Icons.chevron_right,
+                            color: Colors.white),
+                        onPressed: () => loadNext())),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(16)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (var type in details!.types!)
+                      Container(
+                        margin: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 8),
+                        decoration: BoxDecoration(
+                            color: Utils.getTypeColor(type.type!.name!),
+                            borderRadius: BorderRadius.circular(24)),
+                        child: Text(
+                          Utils.firstWordUpperCase(type.type!.name!),
+                          style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Text('About',
+                      style: GoogleFonts.poppins(
+                          color: backgroundColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700)),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    InfoCardCharComponent.defaultComponent(
+                        'assets/images/weight.png',
+                        '${(details!.weight! / 10)!}kg',
+                        'Weight'),
+                    const SizedBox(
+                      height: 50,
+                      child: VerticalDivider(
+                        color: Configs.grayMinimumDefault,
+                        thickness: 2,
+                      ),
+                    ),
+                    InfoCardCharComponent.defaultComponent(
+                        'assets/images/height.png',
+                        '${(details!.height! / 10)!}m',
+                        'Height'),
+                    const SizedBox(
+                      height: 50,
+                      child: VerticalDivider(
+                        color: Configs.grayMinimumDefault,
+                        thickness: 2,
+                      ),
+                    ),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (var ability in details!.abilities!)
+                            Text(
+                              Utils.firstWordUpperCase(ability.ability!.name),
+                              textAlign: TextAlign.start,
+                              style: GoogleFonts.poppins(fontSize: 12),
+                            )
+                        ]),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
+                  child: Text(
+                      species!.flavorTextEntries![9]!.flavorText!
+                          .replaceAll('\n', ''),
+                      style: GoogleFonts.poppins(fontSize: 12)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 24, bottom: 16),
+                  child: Text('Base stats',
+                      style: GoogleFonts.poppins(
+                          color: backgroundColor,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700)),
+                ),
+                for (var stat in details!.stats!)
+                  LinearProgressComponent.defaultComponent(
+                      stat.stat!.name!, stat.baseStat!, backgroundColor),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget createPokemonImage() {
+    return Padding(
+      padding: EdgeInsets.only(top: 60),
+      child: Image.network(
+        Utils.urlOfficialArtwork(details!.id!.toString()),
+        height: 228,
+      ),
+    );
   }
 }

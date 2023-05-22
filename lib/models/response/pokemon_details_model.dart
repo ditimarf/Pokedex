@@ -12,13 +12,6 @@ class PokemonDetailsModel {
   int? height;
   int? weight;
 
-  String? idText() {
-    if (id != null)
-      return '#${id.toString().padLeft(4, '0')}';
-    else
-      return null;
-  }
-
   PokemonDetailsModel(
       {this.abilities,
       this.height,

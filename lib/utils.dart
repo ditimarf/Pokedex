@@ -71,7 +71,15 @@ class Utils {
     }
   }
 
-  static String urlOfficialArtwork(String id){
+  static String urlOfficialArtwork(String id) {
     return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png';
+  }
+
+  static String formatIdText(String? id) {
+    if (id != null) {
+      return '#${id.toString().padLeft(3, '0')}';
+    }
+
+    return '';
   }
 }

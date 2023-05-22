@@ -1,16 +1,16 @@
-import 'ability_model.dart';
+import 'package:pokedex/models/response/response_model.dart';
 
 class StatsModel {
   int? baseStat;
   int? effort;
-  Ability? stat;
+  ResponseModel? stat;
 
   StatsModel({this.baseStat, this.effort, this.stat});
 
   StatsModel.fromJson(Map<String, dynamic> json) {
     baseStat = json['base_stat'];
     effort = json['effort'];
-    stat = json['stat'] != null ? new Ability.fromJson(json['stat']) : null;
+    stat = json['stat'] != null ? new ResponseModel.fromJson(json['stat']) : null;
   }
 
   Map<String, dynamic> toJson() {

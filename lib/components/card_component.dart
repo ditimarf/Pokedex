@@ -27,7 +27,7 @@ class CardComponent {
           Container(
               alignment: Alignment.centerRight,
               child: Text(
-                pokemon.idText()!,
+                Utils.formatIdText(pokemon!.id),
                 textAlign: TextAlign.right,
                 style: GoogleFonts.poppins(
                     color: Configs.grayMediumDefault, fontSize: 10),

@@ -17,6 +17,7 @@ class PokedexHomePage extends StatefulWidget {
 }
 
 class _PokedexHomePageState extends State<PokedexHomePage> {
+  int qtyMaxItens = 0;
   final PagingController<int, PokemonModel> _pagingController =
       PagingController(firstPageKey: 0);
 
@@ -40,6 +41,7 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
       final newPokemonPage =
           await PokemonService.getPokemonList(page, Configs.pageSize);
       if (newPokemonPage != null && newPokemonPage.results != null) {
+        qtyMaxItens = newPokemonPage.count!;
         final isLastPage = newPokemonPage.results!.length < Configs.pageSize;
         if (isLastPage) {
           _pagingController.appendLastPage(newPokemonPage.results!);
@@ -100,7 +102,7 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PokemonDetailsPage(item)),
+                            builder: (context) => PokemonDetailsPage(item, qtyMaxItens)),
                       ),
                       child: CardComponent.defaultComponent(item),
                     ),

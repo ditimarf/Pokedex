@@ -3,14 +3,6 @@ class PokemonModel {
   String? name;
   String? url;
 
-  String? idText() {
-    if (id != null) {
-      return '#${id.toString().padLeft(3, '0')}';
-    }
-
-    return null;
-  }
-
   PokemonModel({this.name, this.url});
 
   PokemonModel.fromJson(Map<String, dynamic> json) {

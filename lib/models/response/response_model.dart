@@ -1,10 +1,10 @@
-class Ability {
+class ResponseModel {
   String? name;
   String? url;
 
-  Ability({this.name, this.url});
+  ResponseModel({this.name, this.url});
 
-  Ability.fromJson(Map<String, dynamic> json) {
+  ResponseModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     url = json['url'];
   }
