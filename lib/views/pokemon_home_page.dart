@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:pokedex/components/card_omponent.dart';
+import 'package:pokedex/components/card_component.dart';
 import 'package:pokedex/configs.dart';
 import 'package:pokedex/models/response/pokemon_model.dart';
 import 'package:pokedex/services/pokemon_service.dart';
+import 'package:pokedex/views/pokemon_details_page.dart';
 
 class PokedexHomePage extends StatefulWidget {
   final String title;
@@ -56,7 +57,7 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
   Widget build(BuildContext context) {
     double paddingTop = MediaQuery.of(context).viewPadding.top;
     return Scaffold(
-      backgroundColor: Configs.redDefault,
+      backgroundColor: Configs.primaryDefault,
       body: Padding(
         padding: EdgeInsets.fromLTRB(8, paddingTop + 16, 8, 16),
         child: Column(
@@ -67,17 +68,16 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
                 Image.asset(
                   'assets/images/pokeball.png',
                   color: Colors.white,
-                  scale: 1.5,
+                  scale: 15,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: Text(
                     'Pokédex',
                     style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 36,
-                      fontWeight: FontWeight.w700
-                    ),
+                        color: Colors.white,
+                        fontSize: 36,
+                        fontWeight: FontWeight.w700),
                   ),
                 ),
               ]),
@@ -96,8 +96,14 @@ class _PokedexHomePageState extends State<PokedexHomePage> {
                     crossAxisCount: 3,
                   ),
                   builderDelegate: PagedChildBuilderDelegate<PokemonModel>(
-                    itemBuilder: (context, item, index) =>
-                        CardComponent.defaultComponent(item),
+                    itemBuilder: (context, item, index) => GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PokemonDetailsPage(item)),
+                      ),
+                      child: CardComponent.defaultComponent(item),
+                    ),
                   ),
                 ),
               ),

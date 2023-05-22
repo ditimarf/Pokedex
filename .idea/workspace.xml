@@ -4,13 +4,28 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8c9336a-8160-4e7e-a0b5-7c1fdfe0bf91" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/images/pokeball.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/components/card_omponent.dart" afterDir="false" />
+    <list default="true" id="a8c9336a-8160-4e7e-a0b5-7c1fdfe0bf91" name="Changes" comment="List of pokemon completed">
+      <change afterPath="$PROJECT_DIR$/assets/images/height.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/weight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/info_card_char_component.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/components/linear_progress_component.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/models/response/abilities_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/models/response/ability_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/models/response/pokemon_details_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/models/response/stats_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/models/response/types_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/utils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/pokeball.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/pokeball.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/components/card_omponent.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/card_component.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/configs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/configs.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/integration/pokemon_integration.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/integration/pokemon_integration.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pokedex.iml" beforeDir="false" afterPath="$PROJECT_DIR$/pokedex.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/models/response/pokemon_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/response/pokemon_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/services/pokemon_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/pokemon_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/pokemon_details_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pokemon_details_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/views/pokemon_home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pokemon_home_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
@@ -34,6 +49,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Q43nhH6X4XJLwE6wrvYetCMEAI" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" />
     <panes>
@@ -52,7 +70,7 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "D:/Projetos/pokedex/assets/images",
+    "last_opened_file_path": "D:/Projetos/tetse/pokedex",
     "settings.editor.selected.configurable": "device.mirroring",
     "show.migrate.to.gradle.popup": "false"
   }
@@ -60,6 +78,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projetos\pokedex\assets\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Projetos\pokedex\assets\images" />
+      <recent name="D:\Projetos\pokedex\assets" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -71,6 +93,14 @@
       <option name="presentableId" value="Default" />
       <updated>1684599197525</updated>
     </task>
+    <task id="LOCAL-00001" summary="List of pokemon completed">
+      <created>1684610101286</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684610101286</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -89,5 +119,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="List of pokemon completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="List of pokemon completed" />
   </component>
 </project>

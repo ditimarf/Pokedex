@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex/models/response/pokemon_model.dart';
 
 import '../configs.dart';
+import '../utils.dart';
 
 class CardComponent {
   static Widget defaultComponent(PokemonModel pokemon) {
@@ -21,25 +22,26 @@ class CardComponent {
         ],
       ),
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  pokemon.id!,
-                  textAlign: TextAlign.right,
-                  style: GoogleFonts.poppins(color: Configs.grayMediumDefault),
-                )),
-            Image.network(
-              pokemon.urlImage!,
-              height: 56,
-              width: 56,
-            ),
-            Text(
-              pokemon.name!,
-              style: GoogleFonts.poppins(color: Configs.grayMaximumDefault),
-            ),
-          ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              alignment: Alignment.centerRight,
+              child: Text(
+                pokemon.idText()!,
+                textAlign: TextAlign.right,
+                style: GoogleFonts.poppins(
+                    color: Configs.grayMediumDefault, fontSize: 10),
+              )),
+          Image.network(
+            Utils.urlOfficialArtwork(pokemon!.id!),
+            height: 56,
+            width: 56,
+          ),
+          Text(
+            Utils.firstWordUpperCase(pokemon.name),
+            style: GoogleFonts.poppins(color: Configs.grayMaximumDefault),
+          ),
+        ],
       ),
     );
   }

@@ -2,19 +2,26 @@ class PokemonModel {
   String? id;
   String? name;
   String? url;
-  String ? urlImage;
+
+  String? idText() {
+    if (id != null) {
+      return '#${id.toString().padLeft(3, '0')}';
+    }
+
+    return null;
+  }
 
   PokemonModel({this.name, this.url});
 
   PokemonModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
     url = json['url'];
     id = url?.split('/').reversed.elementAt(1);
-    urlImage = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png';
+    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['name'] = name;
     data['url'] = url;
     return data;
