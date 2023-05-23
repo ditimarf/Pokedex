@@ -37,9 +37,9 @@ class CardComponent {
             imageUrl: Utils.urlOfficialArtwork(pokemon!.id!),
             imageBuilder: (context, imageProvider) => Image(
               image: imageProvider,
-              height: 56,
-              width: 56,
             ),
+            height: 56,
+            width: 56,
           ),
           Text(
             Utils.firstWordUpperCase(pokemon.name),

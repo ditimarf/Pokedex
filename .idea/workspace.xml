@@ -9,14 +9,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a8c9336a-8160-4e7e-a0b5-7c1fdfe0bf91" name="Changes" comment="Previous and Next pokemon loading by details screen">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+    <list default="true" id="a8c9336a-8160-4e7e-a0b5-7c1fdfe0bf91" name="Changes" comment="Addition of lib of image cache to make app faster and to reduce internet use.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/components/card_component.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/components/card_component.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/views/pokemon_details_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pokemon_details_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +100,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684796789251</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Addition of lib of image cache to make app faster and to reduce internet use.">
+      <created>1684810243191</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1684810243191</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -128,6 +131,7 @@
     <MESSAGE value="List of pokemon completed" />
     <MESSAGE value="Creation of detail screen" />
     <MESSAGE value="Previous and Next pokemon loading by details screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Previous and Next pokemon loading by details screen" />
+    <MESSAGE value="Addition of lib of image cache to make app faster and to reduce internet use." />
+    <option name="LAST_COMMIT_MESSAGE" value="Addition of lib of image cache to make app faster and to reduce internet use." />
   </component>
 </project>

@@ -87,8 +87,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
             children: [
               createAppBar(),
               createBackgroundImage(),
-              createInfosCard(paddingTop),
-              createPokemonImage(),
+              createInfosCard(),
             ],
           ),
         ),
@@ -135,142 +134,181 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
     );
   }
 
-  Widget createInfosCard(double paddingTop) {
-    return Container(
-      margin: EdgeInsets.all(8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Visibility(
-                    visible: details!.id != 1,
-                    child: IconButton(
-                        icon:
-                            const Icon(Icons.chevron_left, color: Colors.white),
-                        onPressed: () => loadPrevious())),
-                Visibility(
-                    visible: details!.id! < qtyMaxPokemons,
-                    child: IconButton(
-                        icon: const Icon(Icons.chevron_right,
-                            color: Colors.white),
-                        onPressed: () => loadNext())),
-              ],
+  Widget createInfosCard() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        createTopCardInfo(),
+        Container(
+            margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(16)),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (var type in details!.types!)
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 4, horizontal: 8),
-                        decoration: BoxDecoration(
-                            color: Utils.getTypeColor(type.type!.name!),
-                            borderRadius: BorderRadius.circular(24)),
-                        child: Text(
-                          Utils.firstWordUpperCase(type.type!.name!),
-                          style: GoogleFonts.poppins(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text('About',
-                      style: GoogleFonts.poppins(
-                          color: backgroundColor,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700)),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    InfoCardCharComponent.defaultComponent(
-                        'assets/images/weight.png',
-                        '${(details!.weight! / 10)!}kg',
-                        'Weight'),
-                    const SizedBox(
-                      height: 50,
-                      child: VerticalDivider(
-                        color: Configs.grayMinimumDefault,
-                        thickness: 2,
-                      ),
-                    ),
-                    InfoCardCharComponent.defaultComponent(
-                        'assets/images/height.png',
-                        '${(details!.height! / 10)!}m',
-                        'Height'),
-                    const SizedBox(
-                      height: 50,
-                      child: VerticalDivider(
-                        color: Configs.grayMinimumDefault,
-                        thickness: 2,
-                      ),
-                    ),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (var ability in details!.abilities!)
-                            Text(
-                              Utils.firstWordUpperCase(ability.ability!.name),
-                              textAlign: TextAlign.start,
-                              style: GoogleFonts.poppins(fontSize: 12),
-                            )
-                        ]),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
-                  child: Text(
-                      species!.flavorTextEntries![9]!.flavorText!
-                          .replaceAll('\n', ''),
-                      style: GoogleFonts.poppins(fontSize: 12)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 24, bottom: 16),
-                  child: Text('Base stats',
-                      style: GoogleFonts.poppins(
-                          color: backgroundColor,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700)),
-                ),
-                for (var stat in details!.stats!)
-                  LinearProgressComponent.defaultComponent(
-                      stat.stat!.name!, stat.baseStat!, backgroundColor),
+                createLabelTypes(),
+                createAboutCard(),
+                createTextInformations(),
+                createBaseStats()
               ],
-            ),
-          ),
-        ],
-      ),
+            ))
+      ],
     );
   }
 
   Widget createPokemonImage() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 60),
-      child: CachedNetworkImage(
-        imageUrl: Utils.urlOfficialArtwork(details!.id!.toString()),
-        imageBuilder: (context, imageProvider) => Image(
-          image: imageProvider,
-          height: 228,
-        ),
+    return CachedNetworkImage(
+      imageUrl: Utils.urlOfficialArtwork(details!.id!.toString()),
+      imageBuilder: (context, imageProvider) => Image(
+        image: imageProvider,
       ),
+      height: 228,
+    );
+  }
+
+  Widget createTopCardInfo() {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Visibility(
+                      visible: details!.id != 1,
+                      child: IconButton(
+                          icon: const Icon(Icons.chevron_left,
+                              color: Colors.white),
+                          onPressed: () => loadPrevious())),
+                  Visibility(
+                      visible: details!.id! < qtyMaxPokemons,
+                      child: IconButton(
+                          icon: const Icon(Icons.chevron_right,
+                              color: Colors.white),
+                          onPressed: () => loadNext())),
+                ],
+              ),
+            ),
+            Container(
+                height: 60,
+                margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                ),
+                child: null)
+          ],
+        ),
+        createPokemonImage()
+      ],
+    );
+  }
+
+  Widget createLabelTypes() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        for (var type in details!.types!)
+          Container(
+            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            decoration: BoxDecoration(
+                color: Utils.getTypeColor(type.type!.name!),
+                borderRadius: BorderRadius.circular(24)),
+            child: Text(
+              Utils.firstWordUpperCase(type.type!.name!),
+              style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700),
+            ),
+          )
+      ],
+    );
+  }
+
+  Widget createAboutCard() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Text('About',
+              style: GoogleFonts.poppins(
+                  color: backgroundColor,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700)),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            InfoCardCharComponent.defaultComponent('assets/images/weight.png',
+                '${(details!.weight! / 10)!}kg', 'Weight'),
+            const SizedBox(
+              height: 50,
+              child: VerticalDivider(
+                color: Configs.grayMinimumDefault,
+                thickness: 2,
+              ),
+            ),
+            InfoCardCharComponent.defaultComponent('assets/images/height.png',
+                '${(details!.height! / 10)!}m', 'Height'),
+            const SizedBox(
+              height: 50,
+              child: VerticalDivider(
+                color: Configs.grayMinimumDefault,
+                thickness: 2,
+              ),
+            ),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              for (var ability in details!.abilities!)
+                Text(
+                  Utils.firstWordUpperCase(ability.ability!.name),
+                  textAlign: TextAlign.start,
+                  style: GoogleFonts.poppins(fontSize: 12),
+                )
+            ]),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget createTextInformations() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
+      child: Text(
+          species!.flavorTextEntries![9]!.flavorText!.replaceAll('\n', ''),
+          style: GoogleFonts.poppins(fontSize: 12)),
+    );
+  }
+
+  Widget createBaseStats() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 24, bottom: 16),
+          child: Text('Base stats',
+              style: GoogleFonts.poppins(
+                  color: backgroundColor,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700)),
+        ),
+        for (var stat in details!.stats!)
+          LinearProgressComponent.defaultComponent(
+              stat.stat!.name!, stat.baseStat!, backgroundColor),
+      ],
     );
   }
 }
