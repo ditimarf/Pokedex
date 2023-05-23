@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -264,10 +263,13 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
 
   Widget createPokemonImage() {
     return Padding(
-      padding: EdgeInsets.only(top: 60),
-      child: Image.network(
-        Utils.urlOfficialArtwork(details!.id!.toString()),
-        height: 228,
+      padding: const EdgeInsets.only(top: 60),
+      child: CachedNetworkImage(
+        imageUrl: Utils.urlOfficialArtwork(details!.id!.toString()),
+        imageBuilder: (context, imageProvider) => Image(
+          image: imageProvider,
+          height: 228,
+        ),
       ),
     );
   }

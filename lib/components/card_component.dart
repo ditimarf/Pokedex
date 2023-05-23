@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex/models/response/pokemon_model.dart';
@@ -32,10 +33,13 @@ class CardComponent {
                 style: GoogleFonts.poppins(
                     color: Configs.grayMediumDefault, fontSize: 10),
               )),
-          Image.network(
-            Utils.urlOfficialArtwork(pokemon!.id!),
-            height: 56,
-            width: 56,
+          CachedNetworkImage(
+            imageUrl: Utils.urlOfficialArtwork(pokemon!.id!),
+            imageBuilder: (context, imageProvider) => Image(
+              image: imageProvider,
+              height: 56,
+              width: 56,
+            ),
           ),
           Text(
             Utils.firstWordUpperCase(pokemon.name),
