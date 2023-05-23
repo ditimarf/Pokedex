@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex/components/info_card_char_component.dart';
 import 'package:pokedex/components/linear_progress_component.dart';
 import 'package:pokedex/configs.dart';
+import 'package:pokedex/models/response/flavor_text_entries_model.dart';
 import 'package:pokedex/models/response/pokemon_model.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pokedex/models/response/pokemon_species_model.dart';
@@ -287,11 +288,15 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
 
   Widget createTextInformations() {
     String flavorText = '';
-    var descriptionOfSwordInEnglish = species!.flavorTextEntries!.firstWhere(
-        (element) =>
-            element.language!.name == 'en' && element.version!.name == 'sword');
-    if (descriptionOfSwordInEnglish != null) {
-      flavorText = descriptionOfSwordInEnglish.flavorText!;
+    var flavorsInEnglish = species!.flavorTextEntries!
+        .where((element) => element.language!.name == 'en');
+
+    //GET BY DEFAULT DESCRIPTION OF POKEMON SWORD IN ENGLISH. ELSE, GET THE FIRST IN ENGLISH.
+    if (flavorsInEnglish != null && flavorsInEnglish.length > 0) {
+      flavorText = flavorsInEnglish
+          .firstWhere((element) => element.version == 'sword',
+              orElse: () => flavorsInEnglish.first)!
+          .flavorText!;
     }
 
     return Padding(
