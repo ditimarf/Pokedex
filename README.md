@@ -1,16 +1,24 @@
-# pokedex
+# POKEDEX FLUTTER APPLICATION
 
-A new Flutter project.
+Application made in flutter (3.10.1) with a simple struct of file layers. I did use [PokeApi](https://pokeapi.co/) as data resource.
+About the layers of application: 
+- Components: Layer where I put the common components.
+- Integration: Layer of communication with API, responsible to GET data of Server.
+- Models.Response: Layer that contains the models of API Objects.
+- Service: Contains the business rules, like calculations to get OFFSET of search.
+- View: Contains the two screens of APP.
+- Configs: Contains the main values of application, like colors etc...
+- Utils: Contains some methods used in app, like text formatter etc..
 
-## Getting Started
+## VALIDATIONS
+I didn't data validations because I trusted in API and in data default.
+But if I didn't have that confidence, it would be nice to add validations on null values and guarantee the API return.
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## USED LIBRARIES
+- cupertino_icons: Default icons of app.
+- http: To made HTTP request.
+- infinite_scroll_pagination: To made default pagination with infinity scroll. 
+- google_fonts: To use poppins font.
+- flutter_spinkit: Used to show the loader when the pokemon is clicked
+- cached_network_image: User to cache data images, using less internet show icons faster.

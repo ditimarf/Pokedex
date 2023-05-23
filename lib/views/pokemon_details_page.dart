@@ -286,10 +286,17 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
   }
 
   Widget createTextInformations() {
+    String flavorText = '';
+    var descriptionOfSwordInEnglish = species!.flavorTextEntries!.firstWhere(
+        (element) =>
+            element.language!.name == 'en' && element.version!.name == 'sword');
+    if (descriptionOfSwordInEnglish != null) {
+      flavorText = descriptionOfSwordInEnglish.flavorText!;
+    }
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 0),
-      child: Text(
-          species!.flavorTextEntries![9]!.flavorText!.replaceAll('\n', ''),
+      child: Text(flavorText.replaceAll('\n', ''),
           style: GoogleFonts.poppins(fontSize: 12)),
     );
   }
